@@ -1,12 +1,13 @@
 import re
 
 class Parser:
-    def __init__(self, input_str):
-        self.tokens = re.findall(r'\w+|[{}(),;:=<>+\-*/]', input_str)
+    def __init__(self, input_str):                                              # конструктор/инициализатор
+        self.tokens = re.findall(r'\w+|[{}(),;:=<>+\-*/]', input_str)    # разбиение строки на токены
         self.pos = 0
 
-    def expect(self, expected_token):
-        if self.pos < len(self.tokens) and self.tokens[self.pos] == expected_token:
+    def expect(self, expected_token):                                                  # Проверка на соответствие ожидаемому токену
+
+        if self.pos < len(self.tokens) and self.tokens[self.pos] == expected_token:    # позиция < длины и текущий токен=ожидаемый
             self.pos += 1
         else:
             raise SyntaxError(f"Expected '{expected_token}', got '{self.tokens[self.pos]}' at position {self.pos}")
@@ -138,13 +139,14 @@ class Parser:
         else:
             raise SyntaxError(f"Expected number, got '{self.tokens[self.pos]}' at position {self.pos}")
 
-# Test the parser with the corrected example
+# тестовый код
 test_input = '''
 {a,b,del: int;
 read(a); 
 read(b); 
 del ass a/b;
-writeln(del);}
+writeln(del);
+}
 '''
 parser = Parser(test_input)
 try:
