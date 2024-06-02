@@ -1,6 +1,5 @@
 import re
 
-
 class Parser:
     def __init__(self, input_str):
         self.tokens = re.findall(r'\w+|[{}(),;:=<>+\-*/]', input_str)
@@ -45,14 +44,10 @@ class Parser:
             self.I()
 
     def S1(self):
-        if self.pos < len(self.tokens) and self.tokens[self.pos] != '}':
+        while self.pos < len(self.tokens) and self.tokens[self.pos] != '}':
             self.S()
-            while self.pos < len(self.tokens) and self.tokens[self.pos] == ';':
+            if self.pos < len(self.tokens) and self.tokens[self.pos] == ';':
                 self.expect(';')
-                self.S()
-        # Убедимся, что парсер завершает работу, если достигнут конец программы
-        if self.pos < len(self.tokens) and self.tokens[self.pos] == '}':
-            self.expect('}')
 
     def S(self):
         if self.pos < len(self.tokens) and self.tokens[self.pos] == 'if':
@@ -142,7 +137,6 @@ class Parser:
                 self.pos += 1
         else:
             raise SyntaxError(f"Expected number, got '{self.tokens[self.pos]}' at position {self.pos}")
-
 
 # Test the parser with the corrected example
 test_input = '''
