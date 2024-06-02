@@ -1,0 +1,5 @@
+{a,b,del: integer
+read(a,b)
+del ass a/b
+writeln(del)
+}
